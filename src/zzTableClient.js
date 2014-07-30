@@ -12,7 +12,7 @@
                     tableModel: '=tableModel'
                 },
                 link: link,
-                controller: ['$scope', '$filter', function ($scope, $filter) {
+                controller: ['$scope', 'filterFilter', 'orderByFilter', function ($scope, filterFilter, orderByFilter) {
                     
                     $scope.tableModel.searchPage = 1;
                     $scope.tableModel.searchTotalItems = 0;
@@ -37,8 +37,8 @@
                     function search() {
                         if ($scope.tableModel.searchCriteria.SearchText && $scope.tableModel.searchCriteria.SearchText != '') {
                             $scope.tableModel.isUsingSearch = true;
-
-                            $scope.tableModel.searchList = $filter('filter')($scope.tableModel.list, $scope.tableModel.searchCriteria.SearchText);
+                            
+                            $scope.tableModel.searchList = filterFilter($scope.tableModel.list, $scope.tableModel.searchCriteria.SearchText);
                             $scope.tableModel.searchPage = 1;
                             $scope.tableModel.searchTotalItems = $scope.tableModel.searchList.length;
                         } else {
@@ -79,9 +79,9 @@
 
                         var tempList = [];
                         if ($scope.tableModel.isUsingSearch) {
-                            tempList = $filter('orderBy')($scope.tableModel.searchList, sortField, sortDesc);
+                            tempList = orderByFilter($scope.tableModel.searchList, sortField, sortDesc);
                         } else {
-                            tempList = $filter('orderBy')($scope.tableModel.list, sortField, sortDesc);
+                            tempList = orderByFilter($scope.tableModel.list, sortField, sortDesc);
                         }
                         
                         $scope.tableModel.filteredList = tempList.slice(begin, end);                                                
