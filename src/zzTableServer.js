@@ -26,8 +26,10 @@
                     $scope.changePage = changePage;
 
                     
-                    function changePage(page) {
-                        $scope.tableModel.searchCriteria.Page = page;
+                    function changePage() {
+                        // this has changed since angular-ui had breaking changes. this needs to be refactored
+                        // but I haven't removed in case there are other breaking changes
+                        $scope.tableModel.searchCriteria.Page = $scope.tableModel.searchCriteria.Page;
                         refresh();
                     }
 
